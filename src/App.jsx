@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import ChatBot from "react-chatbot-kit";
 
 import { PageLayout } from './components/PageLayout';
@@ -19,6 +19,12 @@ const ProfileContent = () => {
     const { instance, accounts } = useMsal();
     const [graphData, setGraphData] = useState(null);
 
+    const [token, setToken] = useState("")
+
+    useEffect(() => {
+        RequestProfileData();
+     }, []);
+
     function RequestProfileData() {
         // Silently acquires an access token which is then attached to a request for MS Graph data
         instance
@@ -28,19 +34,23 @@ const ProfileContent = () => {
             })
             .then((response) => {
                 callMsGraph(response.accessToken).then((response) => setGraphData(response));
+                setToken(response.idToken)
             });
     }
 
     return (
         <>
             <h5 className="profileContent">Welcome {accounts[0].name}</h5>
-            {graphData ? (
+            {/* {graphData ? (
                 <ProfileData graphData={graphData} />
-            ) : (
-                <Button variant="secondary" onClick={RequestProfileData}>
-                    Request Profile
-                </Button>
-            )}
+            ) : ( */}
+                {/* // <Button variant="secondary"  >
+                //     Request Profile
+                // </Button> */}
+            <ChatbotEmbed token={token}/>
+
+            {/* )} */}
+
         </>
     );
 };
@@ -49,11 +59,16 @@ const ProfileContent = () => {
  * If a user is authenticated the ProfileContent component above is rendered. Otherwise a message indicating a user is not authenticated is rendered.
  */
 const MainContent = () => {
+    // useEffect(()=>{
+    //     setTimeout(()=>{
+    //         setToken("1111")
+    //     },2000);
+    // }, [])
+
     return (
         <div className="App">
             <AuthenticatedTemplate>
                 <ProfileContent />
-                <ChatbotEmbed/>
 
             </AuthenticatedTemplate> 
 
@@ -66,6 +81,7 @@ const MainContent = () => {
 
 export default function App() {
     return (
+        
         <PageLayout>
             <MainContent />
         </PageLayout>

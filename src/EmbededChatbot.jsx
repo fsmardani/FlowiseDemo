@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
-const ChatbotEmbed = () => {
+const ChatbotEmbed = ({token}) => {
+  console.log("reached here")
   useEffect(() => {
     // Create a script element
     const script = document.createElement('script');
@@ -10,16 +11,14 @@ const ChatbotEmbed = () => {
 
     // Set the script content
     script.innerHTML = `
-      import Chatbot from 'https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js';
+      import Chatbot from 'https://cdn.jsdelivr.net/gh/fsmardani/FlowiseChatEmbed/dist/web.js';
       Chatbot.init({
-        chatflowid: 'abc',
-        apiHost: 'http://localhost:3000',
-        chatflowConfig: {
-          "sessionId": "123",
-          "returnSourceDocuments": true
-        }
+        chatflowid: '41d00239-dcd0-4b61-aa84-9d477bad26ea',
+        apiHost: 'https://flowise-v1py.onrender.com',
+        accessToken: '${token}'
       });
     `;
+    console.log(token)
 
     // Append the script to the body
     document.body.appendChild(script);
@@ -28,7 +27,7 @@ const ChatbotEmbed = () => {
     return () => {
       document.body.removeChild(script);
     };
-  }, []);
+  }, );
 
   return (
     <div>

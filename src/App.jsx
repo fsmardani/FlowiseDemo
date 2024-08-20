@@ -23,7 +23,7 @@ const ProfileContent = () => {
 
     useEffect(() => {
         RequestProfileData();
-     }, []);
+    }, []);
 
     function RequestProfileData() {
         // Silently acquires an access token which is then attached to a request for MS Graph data
@@ -35,6 +35,7 @@ const ProfileContent = () => {
             .then((response) => {
                 callMsGraph(response.accessToken).then((response) => setGraphData(response));
                 setToken(response.idToken)
+                localStorage.setItem('reservedT', response.idToken)
             });
     }
 
@@ -44,10 +45,10 @@ const ProfileContent = () => {
             {/* {graphData ? (
                 <ProfileData graphData={graphData} />
             ) : ( */}
-                {/* // <Button variant="secondary"  >
+            {/* // <Button variant="secondary"  >
                 //     Request Profile
                 // </Button> */}
-            <ChatbotEmbed token={token}/>
+            {token && <ChatbotEmbed token={token} />}
 
             {/* )} */}
 
@@ -59,19 +60,11 @@ const ProfileContent = () => {
  * If a user is authenticated the ProfileContent component above is rendered. Otherwise a message indicating a user is not authenticated is rendered.
  */
 const MainContent = () => {
-    // useEffect(()=>{
-    //     setTimeout(()=>{
-    //         setToken("1111")
-    //     },2000);
-    // }, [])
-
     return (
         <div className="App">
             <AuthenticatedTemplate>
                 <ProfileContent />
-
-            </AuthenticatedTemplate> 
-
+            </AuthenticatedTemplate>
             <UnauthenticatedTemplate>
                 <h5 className="card-title">Please sign-in to see your profile information.</h5>
             </UnauthenticatedTemplate>
@@ -81,7 +74,7 @@ const MainContent = () => {
 
 export default function App() {
     return (
-        
+
         <PageLayout>
             <MainContent />
         </PageLayout>

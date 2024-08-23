@@ -9,9 +9,10 @@ const ChatbotEmbed = ({token}) => {
     // Set the type to module
     script.type = 'module';
 
+    // import Chatbot from 'https://cdn.jsdelivr.net/gh/sinarchitect/flowiseNewRepo/dist/web.js';
     // Set the script content
     script.innerHTML = `
-      import Chatbot from 'https://cdn.jsdelivr.net/gh/sinarchitect/flowiseNewRepo/dist/web.js';
+      import Chatbot from 'http://localhost:3001/web.js';
       Chatbot.init({
         chatflowid: '41d00239-dcd0-4b61-aa84-9d477bad26ea',
         apiHost: 'https://flowise-v1py.onrender.com',

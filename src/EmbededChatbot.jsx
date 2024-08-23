@@ -27,7 +27,7 @@ const ChatbotEmbed = ({token}) => {
     return () => {
       document.body.removeChild(script);
     };
-  }, );
+  },[]);
 
   return (
     <div>

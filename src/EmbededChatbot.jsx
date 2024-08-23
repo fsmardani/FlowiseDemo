@@ -11,7 +11,7 @@ const ChatbotEmbed = ({token}) => {
 
     // Set the script content
     script.innerHTML = `
-      import Chatbot from 'https://cdn.jsdelivr.net/gh/sinarchitect/flowise/dist/web.js';
+      import Chatbot from 'https://cdn.jsdelivr.net/gh/sinarchitect/flowiseNewRepo/dist/web.js';
       Chatbot.init({
         chatflowid: '41d00239-dcd0-4b61-aa84-9d477bad26ea',
         apiHost: 'https://flowise-v1py.onrender.com',
